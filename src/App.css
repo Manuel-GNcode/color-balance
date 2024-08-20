@@ -1,0 +1,10 @@
+#balance-result {
+    border: 2px solid white;
+    margin: 16px auto;
+    padding: 8px;
+}
+#value {
+    font-size: 3rem;
+    font-weight: bold;
+    color: aliceblue;
+}
