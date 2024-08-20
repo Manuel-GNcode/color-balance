@@ -25,3 +25,20 @@ export const getContrast = (lum1, lum2) => {
     else contrast = (lum2 + 0.05) / (lum1 + 0.05);
     return contrast;
 }
+
+export const checkHex = (hex) => {
+    let isHex = hex.trim().toUpperCase();
+    if (isHex.startsWith('#')) { isHex = isHex.substring(1, isHex.length) }
+    
+    if (isHex.length < 3) {
+        isHex = isHex.padStart(6, '0');
+    } else if (isHex.length < 6) {
+        isHex = isHex.split('').map(value=>value+value).slice(0,3).join('');
+    } else if (isHex.length > 6) {
+        isHex = isHex.substring(0,6);
+    }
+
+    const arrHex = isHex.split('').map(value=> /^[0-9A-Fa-f]$/.test(value) ? value : 1)
+    isHex = '#'+arrHex.join('')
+    return isHex;
+}

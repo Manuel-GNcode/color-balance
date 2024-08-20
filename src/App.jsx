@@ -1,23 +1,6 @@
 import './App.css';
 import { useState, useRef, useEffect } from "react";
-import { getRGB, getLuminance, getContrast } from "./functions/functions.js";
-
-const checkHex = (hex) => {
-    let isHex = hex.trim().toUpperCase();
-    if (isHex.startsWith('#')) { isHex = isHex.substring(1, isHex.length) }
-    
-    if (isHex.length < 3) {
-        isHex = isHex.padStart(6, '0');
-    } else if (isHex.length < 6) {
-        isHex = isHex.split('').map(value=>value+value).slice(0,3).join('');
-    } else if (isHex.length > 6) {
-        isHex = isHex.substring(0,6);
-    }
-
-    const arrHex = isHex.split('').map(value=> /^[0-9A-Fa-f]$/.test(value) ? value : 1)
-    isHex = '#'+arrHex.join('')
-    return isHex;
-}
+import { getRGB, getLuminance, getContrast, checkHex } from "./functions/functions.js";
 
 function App() {
     const textFirstColor = useRef(null);
@@ -25,14 +8,15 @@ function App() {
     const textSecondColor = useRef(null);
     const selectSecondColor = useRef(null);
     const result = useRef(null);
+    const balanceExample = useRef(null);
 
-    const [color1, setColor1] = useState('#000000');
-    const [color2, setColor2] = useState('#FFFFFF');
+    const [color1, setColor1] = useState('#FFFFFF');
+    const [color2, setColor2] = useState('#023047');
     const [textColor, setTextColor] = useState(false);
 
     useEffect(()=>{
-        textFirstColor.current.value = '#000000';
-        textSecondColor.current.value = '#FFFFFF';
+        textFirstColor.current.value = '#FFFFFF';
+        textSecondColor.current.value = '#023047';
     }, []);
 
     useEffect(() => {
@@ -42,6 +26,9 @@ function App() {
         }
         selectFirstColor.current.value = color1;
         selectSecondColor.current.value = color2;
+
+        balanceExample.current.style.color = color1;
+        balanceExample.current.style.background = color2;
 
         const contrastValue = getContrast(getLuminance(getRGB(color1)), getLuminance(getRGB(color2)));
         result.current.textContent = contrastValue % 1 !== 0 ? contrastValue.toFixed(2) : contrastValue;
@@ -64,26 +51,93 @@ function App() {
     return (
         <>
             <header id='balance-header'>
-                <h1 id='balance-title'>Color-balance</h1>
+                <h1 id='balance-title'>Color Balance</h1>
+                <p>Calculate the contrast ratio of two colors</p>
+                <p>{"The visual presentation of text and images of text has a contrast ratio of at least 4.5:1 (3:1 for large text)"} <a target='_blank' href='https://www.w3.org/TR/WCAG20/#visual-audio-contrast-contrast'>WCAG</a></p>
             </header>
 
             <main id='balance-main'>
-                <section className='balance-section'>
-                    <div className='balance-color'>
-                        <input onBlur={handleInputText} onInput={handleSelect} ref={textFirstColor} type="text" name="txt-first-color" id="txt-first-color" />
-                        <input onInput={handleText} ref={selectFirstColor} type="color" name='select-first-color' id="select-first-color" />
-                    </div>
+                <article className='balance-article'>
+                    <section id='balance-section-color'>
+                        <div className='balance-color'>
+                            <p>Text color</p>
+                            <input onBlur={handleInputText} onInput={handleSelect} ref={textFirstColor} type="text" name="txt-first-color" id="txt-first-color" />
+                            <input onInput={handleText} ref={selectFirstColor} type="color" name='select-first-color' id="select-first-color" />
+                        </div>
 
-                    <div className='balance-color'>
-                        <input onBlur={handleInputText} onInput={handleSelect} ref={textSecondColor} type="text" name="txt-second-color" id="txt-second-color" />
-                        <input onInput={handleText} ref={selectSecondColor} type="color" name='select-second-color' id="select-second-color" />
-                    </div>
+                        <div className='balance-color'>
+                            <p>Background color</p>
+                            <input onBlur={handleInputText} onInput={handleSelect} ref={textSecondColor} type="text" name="txt-second-color" id="txt-second-color" />
+                            <input onInput={handleText} ref={selectSecondColor} type="color" name='select-second-color' id="select-second-color" />
+                        </div>
 
-                    <div id="balance-result">
-                        <h2 id="contrast-color">Constrast Color</h2>
-                        <p ref={result} id='value'></p>
-                    </div>
-                </section>
+                        <div id="balance-result">
+                            <h2 id="contrast-color">Color Contrast ratio</h2>
+                            <p ref={result} id='value'></p>
+                        </div>
+                    </section>
+                    
+                    <section ref={balanceExample} id='balance-section-example'>
+                        <h2>Title</h2>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, quos! Ut at perspiciatis vero. Illum doloremque, quasi nulla fuga ratione veniam animi accusantium distinctio repellendus minus nisi aliquid corrupti esse.</p>
+                    </section>
+                </article>
+
+                <article className='balance-article' id='article-guide'>
+                    <section>
+                        <h2>What is Color Balance?</h2>
+                        <p>Ensure your color combinations are accessible and easy to read. Our tool evaluates the contrast between two colors and indicates whether they meet accessibility standards. Ideal for designers and web developers looking to improve readability and user experience.</p>
+                    </section>
+
+                    <section>
+                        <h2>Help / How to use this tool?</h2>
+                        <p>The Color Balance interface is a form with two mandatory fields</p>
+
+                        <h3>Text color</h3>
+                        <p>This is the color of the text. You can fill in this field with an hexadecimal value. The input value is then previewed on the right of the field.</p>
+
+                        <h4>hexadecimal values</h4>
+                        <p>Example: #AABBCC. Please note that #ABC works also, we automatically complete the field with #AABBCC. You can also use this field without the # character, so FFF or FFFFFF works perfectly.</p>
+
+                        <h3>Background color</h3>
+                        <p>This field works just like the text color field.</p>
+                    </section>
+
+                    <section>
+                        <h2>Color contrast ratio</h2>
+                        <p>How to choose a ratio? It depends on the following elements:</p>
+                        
+                        <p>The level AA requieres a contrast ratio of at least 4.5:1 for normal text and 3:1 for large text (at least 18pt) or bold text.</p>
+
+                        <p>The level AAA requires a contrast ratio of at least 7:1 for normal text and 4.5:1 for large text or bold text.</p>
+
+                        <p>For a full and exhaustive understanding of how to interpret this, one should read <a href='https://www.w3.org/TR/WCAG20/#larger-scaledef'>the defintion of large-scale text from WCAG.</a></p>
+                    </section>
+
+                    <section>
+                        <h2>The algorithms</h2>
+                        <p>The contrast ratio between two colors is used to measure the difference in luminance between a background color and a flat primer color.</p>
+                        
+                        <h3>Normalize RGB color</h3>
+                        <p>The color value divided by 255</p>
+                        <p>Let&apos;s take the color #FF0000, which in RGB would be rgb(255,0,0), We divide each value by 255: r=255/255, g=0/255 and b=0/255, we would have r=1, g=0 and b=0.</p>
+
+                        <h3>Convert to relative luminance</h3>
+                        <p>For each component C of the normalized color if it is less than or equal to 0.03928 we divide it by 12.92, if not we apply the following formula: ((C + 0.055)/1.055)^2.4.</p>
+                        <p>Then the luminance is calculated as: L = 0.2126*R + 0.7152*G + 0.0722*B.
+                        </p>
+
+                        <h3>Calculate the contrast ratio</h3>
+                        <p>Contrast Ratio = (Lower luminance + 0.05) / (Higher luminance + 0.05)</p>
+                        <p>The contrast ratio varies from 1:1 (no contrast, when both colors are the same) to 21:1 (maximum contrast, such as white on black).</p>
+                    </section>
+
+                    <section>
+                        <h2>Contribute to Color Balance</h2>
+                        <p>All contributions are warmly welcome ! Translation, correction, bug report, new feature…
+                        Feel free to play with <a href='#'>source code.</a></p>
+                    </section>
+                </article>
             </main>
 
             <footer>
