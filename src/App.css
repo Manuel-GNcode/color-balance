@@ -8,39 +8,89 @@ h1, h2, h3, h4 {
     margin: 8px 0;
     color: var(--title-color);
 }
-#balance-article {
-    
+legend {
+    user-select: none;
 }
+
+#balance-header, #balance-section-color, #article-guide, .balance-article {
+    margin-bottom: 32px;
+}
+main {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
 #balance-section-color {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 16px;
+}
+
+.balance-color {
     padding: 16px;
+    border-radius: 8px;
+    display: flex;
+    width: fit-content;
+    justify-content: center;
+    border: 2px solid var(--title-color);
+}
+.balance-color legend {
+    padding: 0 8px;
+    font-weight: bold;
+    color: var(--title-color);
+}
+#txt-first-color, #txt-second-color {
+    font-size: 1.2rem;
+    padding: 4px;
+    padding-left: 8px;
+    outline: none;
+    border: none;
+    background-color: #ecebf1;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    width: 200px;
+}
+#select-first-color, #select-second-color {
+    height: 40px;
+    width: 80px;
+    border: none;
+    background: #ecebf1;
+    cursor: pointer;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    padding: 4px;
 }
 
 #balance-result {
     border: 1px solid var(--ratio-color);
-    margin: 16px auto;
     padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
     border-radius: 16px;
     color: var(--ratio-color);
 }
+#contrast-color {
+    color: var(--ratio-color);
+    font-size: 1.2rem;
+}
 #value {
-    font-size: 3rem;
+    font-size: 1.8rem;
 }
 
 #balance-section-example {
     text-align: left;
 }
 #balance-section-example h2 {
-    border-bottom: 1px solid var(--title-color);
+    border-bottom: 2px solid var(--title-color);
 }
 .example-text {
     display: flex;
     gap: 16px;
+    justify-content: space-between;
+}
+.example-text div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 .example-text>p {
     background-color: var(--bg-color);
@@ -51,6 +101,17 @@ h1, h2, h3, h4 {
     align-items: center;
     font-size: 1.125rem;
     border-radius: 8px;
+    max-width: 600px;
+}
+.example-text p b {
+    font-size: 19px;
+}
+#pass-fail {
+    color: #fff;
+    font-weight: bold;
+    padding: 4px;
+    border-radius: 6px;
+    font-size: .7rem;
 }
 
 #article-guide {
@@ -61,5 +122,36 @@ h1, h2, h3, h4 {
     background-color: #EEEDEB;
     border-radius: 16px;
     padding: 16px;
-    margin: 32px 0;
+}
+#article-guide p {
+    margin-bottom: 6px;
+}
+
+footer {
+    background-color: var(--title-color);
+    color: #fff;
+    padding: 16px;
+}
+footer address b {
+    color: #ff0000;
+}
+
+@media screen and (width >= 700px) {
+    #article-color {
+        border: 1px solid rgba(0, 0, 0, 0.164);
+        padding: 32px;
+        border-radius: 16px;
+    }
+    #balance-section-color {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+    }
+    #txt-first-color, #txt-second-color {
+        width: 150px;
+    }
+    #balance-result {
+        padding: 8px;
+    }
 }
