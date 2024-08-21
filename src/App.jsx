@@ -1,6 +1,15 @@
 import './App.css';
 import { useState, useRef, useEffect } from "react";
 import { getRGB, getLuminance, getContrast, checkHex } from "./functions/functions.js";
+import { ratioColor } from './constants/constants.js';
+
+const selectRatioColor = (ratio)=>{
+    if (ratio < 3) return 'bad'
+    else if (ratio <= 4.5) return 'regular'
+    else if (ratio <= 7) return 'good'
+    else if (ratio <= 11) return 'great'
+    else return 'dorime'
+}
 
 function App() {
     const textFirstColor = useRef(null);
@@ -8,7 +17,6 @@ function App() {
     const textSecondColor = useRef(null);
     const selectSecondColor = useRef(null);
     const result = useRef(null);
-    const balanceExample = useRef(null);
 
     const [color1, setColor1] = useState('#FFFFFF');
     const [color2, setColor2] = useState('#023047');
@@ -27,11 +35,15 @@ function App() {
         selectFirstColor.current.value = color1;
         selectSecondColor.current.value = color2;
 
-        balanceExample.current.style.color = color1;
-        balanceExample.current.style.background = color2;
-
         const contrastValue = getContrast(getLuminance(getRGB(color1)), getLuminance(getRGB(color2)));
         result.current.textContent = contrastValue % 1 !== 0 ? contrastValue.toFixed(2) : contrastValue;
+
+        const calification = selectRatioColor(contrastValue);
+        const root = document.documentElement;
+        root.style.setProperty('--ratio-color', ratioColor[calification])
+        root.style.setProperty('--bg-color', color2)
+        root.style.setProperty('--text-color', color1)
+
     }, [color1, color2, textColor]);
 
     const handleText = () => {
@@ -53,7 +65,7 @@ function App() {
             <header id='balance-header'>
                 <h1 id='balance-title'>Color Balance</h1>
                 <p>Calculate the contrast ratio of two colors</p>
-                <p>{"The visual presentation of text and images of text has a contrast ratio of at least 4.5:1 (3:1 for large text)"} <a target='_blank' href='https://www.w3.org/TR/WCAG20/#visual-audio-contrast-contrast'>WCAG</a></p>
+                <p>{"The visual presentation of text has a contrast ratio of at least 4.5:1 (3:1 for large text)"} <a target='_blank' href='https://www.w3.org/TR/WCAG20/#visual-audio-contrast-contrast'>WCAG</a></p>
             </header>
 
             <main id='balance-main'>
@@ -72,14 +84,30 @@ function App() {
                         </div>
 
                         <div id="balance-result">
-                            <h2 id="contrast-color">Color Contrast ratio</h2>
+                            <h2 id="contrast-color">Contrast Ratio</h2>
                             <p ref={result} id='value'></p>
                         </div>
                     </section>
                     
-                    <section ref={balanceExample} id='balance-section-example'>
-                        <h2>Title</h2>
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non, quos! Ut at perspiciatis vero. Illum doloremque, quasi nulla fuga ratione veniam animi accusantium distinctio repellendus minus nisi aliquid corrupti esse.</p>
+                    <section id='balance-section-example'>
+                        <h2>Normal Text</h2>
+                        
+                        <div className='example-text'>
+                            <div>
+                                <p>WCAG AA: <span>i</span></p>
+                                <p>WCAG AAA: <span>i</span></p>
+                            </div>
+                            <p>Random Quote</p>
+                        </div>
+
+                        <h2>Large or bold Text</h2>
+                        <div className='example-text'>
+                            <div>
+                                <p>WCAG AA: <span>i</span></p>
+                                <p>WCAG AAA: <span>i</span></p>
+                            </div>
+                            <p><b>Random Quote</b></p>
+                        </div>
                     </section>
                 </article>
 
