@@ -1,3 +1,18 @@
+import { randomQuotes } from "../constants/constants";
+
+export const getRandomQuotes = ()=>{
+    const random = Math.floor(Math.random()*randomQuotes.length)
+    return randomQuotes[random];
+}
+
+export const selectRatioColor = (ratio)=>{
+    if (ratio < 3) return 'bad'
+    else if (ratio <= 4.5) return 'regular'
+    else if (ratio <= 7) return 'good'
+    else if (ratio <= 11) return 'great'
+    else return 'dorime'
+}
+
 export const getRGB = (hex) => {
     hex = hex.replace('#', '');
     const r = parseInt(hex.substring(0, 2), 16);

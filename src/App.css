@@ -20,6 +20,9 @@ main {
     margin: 0 auto;
 }
 
+#article-color {
+    padding: 8px;
+}
 #balance-section-color {
     display: flex;
     flex-direction: column;
@@ -131,6 +134,8 @@ footer {
     background-color: var(--title-color);
     color: #fff;
     padding: 16px;
+    border: 1px solid var(--title-color);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.144);
 }
 footer address b {
     color: #ff0000;

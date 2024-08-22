@@ -13,9 +13,23 @@ body {
     background-color: #fafafa;
     padding-top: 32px;
 }
+
+::-webkit-scrollbar {
+    width: 15px;
+}
+::-webkit-scrollbar-track {
+    background: #fafafa;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #1F316F;
+    border-radius: 20px;
+    border: 2px solid white;
+}
+
 @media screen and (width >= 1000px) {
     body {
         padding: 0 64px;
+        background-color: #1f306f25;
     }
     #root {
         border: 1px solid rgba(0, 0, 0, 0.164);

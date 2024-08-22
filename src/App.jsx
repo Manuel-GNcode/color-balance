@@ -1,16 +1,8 @@
 import './App.css';
 import { useState, useRef, useEffect } from "react";
-import { getRGB, getLuminance, getContrast, checkHex } from "./functions/functions.js";
+import { getRGB, getLuminance, getContrast, checkHex, selectRatioColor, getRandomQuotes } from "./functions/functions.js";
 import { ratioColor } from './constants/constants.js';
 import { PassOrFail } from './components/passOrfail.jsx';
-
-const selectRatioColor = (ratio)=>{
-    if (ratio < 3) return 'bad'
-    else if (ratio <= 4.5) return 'regular'
-    else if (ratio <= 7) return 'good'
-    else if (ratio <= 11) return 'great'
-    else return 'dorime'
-}
 
 function App() {
     const textFirstColor = useRef(null);
@@ -98,7 +90,7 @@ function App() {
                                 <p>WCAG AA: <PassOrFail wcag='AA' contrast={constrastRatio} type={'normal'}/></p>
                                 <p>WCAG AAA: <PassOrFail wcag='AAA' contrast={constrastRatio} type={'normal'}/></p>
                             </div>
-                            <p>Random Quote</p>
+                            <p>{getRandomQuotes()}</p>
                         </div>
                         <br/>
                         <h2>Large or bold Text</h2>
@@ -107,7 +99,7 @@ function App() {
                                 <p>WCAG AA: <PassOrFail wcag='AA' contrast={constrastRatio} type={'large'}/></p>
                                 <p>WCAG AAA: <PassOrFail wcag='AAA' contrast={constrastRatio} type={'large'}/></p>
                             </div>
-                            <p><b>Random Quote</b></p>
+                            <p><b>{getRandomQuotes()}</b></p>
                         </div>
                     </section>
                 </article>
