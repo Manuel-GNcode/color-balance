@@ -33,9 +33,7 @@ main {
 .balance-color {
     padding: 16px;
     border-radius: 8px;
-    display: flex;
     width: fit-content;
-    justify-content: center;
     border: 2px solid var(--title-color);
 }
 .balance-color legend {
@@ -52,7 +50,9 @@ main {
     background-color: #ecebf1;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
-    width: 200px;
+    width: 150px;
+    height: 40px;
+    transform: translateY(-4px);
 }
 #select-first-color, #select-second-color {
     height: 40px;
@@ -63,6 +63,30 @@ main {
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     padding: 4px;
+}
+
+.balance-range {
+    appearance: none;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+.balance-range:hover {
+    opacity: 1;
+}
+.balance-range::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--title-color);
+    border-radius: 50%;
+    cursor: pointer;
+}
+.balance-range::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--title-color);
+    cursor: pointer;
+    border-radius: 50%;
 }
 
 #balance-result {

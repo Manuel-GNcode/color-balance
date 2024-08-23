@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { getRGB, getLuminance, getContrast, checkHex, selectRatioColor, getRandomQuotes } from "./functions/functions.js";
 import { ratioColor } from './constants/constants.js';
 import { PassOrFail } from './components/passOrfail.jsx';
+import { Lightness } from './components/lightness.jsx';
 
 function App() {
     const textFirstColor = useRef(null);
@@ -69,12 +70,14 @@ function App() {
                             <legend>Text color</legend>
                             <input onBlur={handleInputText} onInput={handleSelect} ref={textFirstColor} type="text" name="txt-first-color" id="txt-first-color" />
                             <input onInput={handleText} ref={selectFirstColor} type="color" name='select-first-color' id="select-first-color" />
+                            <Lightness color={color1} setColor={setColor1} setText={setTextColor}/>
                         </fieldset>
 
                         <fieldset className='balance-color'>
                             <legend>Background color</legend>
                             <input onBlur={handleInputText} onInput={handleSelect} ref={textSecondColor} type="text" name="txt-second-color" id="txt-second-color" />
                             <input onInput={handleText} ref={selectSecondColor} type="color" name='select-second-color' id="select-second-color" />
+                            <Lightness color={color2} setColor={setColor2} setText={setTextColor}/>
                         </fieldset>
 
                         <div id="balance-result">
