@@ -20,6 +20,28 @@ main {
     margin: 0 auto;
 }
 
+#balance-header {
+    width: fit-content;
+    margin: 0 auto 32px;
+    border: 1px solid transparent;
+}
+#balance-header>p {
+    text-wrap: nowrap;
+    margin-top: 20px;
+}
+#balance-title {
+    margin-top: 20px;
+}
+#logo {
+    width: 80px;
+    height: 80px;
+    background-image: url(logo.webp);
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    float: left;
+    margin-left: -30px;
+}
 #article-color {
     padding: 8px;
 }

@@ -59,6 +59,7 @@ function App() {
     return (
         <>
             <header id='balance-header'>
+                <span id='logo'></span>
                 <h1 id='balance-title'>Color Balance</h1>
                 <p>Calculate the contrast ratio of two colors.</p>
             </header>
